@@ -1,0 +1,11 @@
+/*
+ * Connect all of your endpoints together here.
+ */
+var bodyParser = require('body-parser');
+module.exports = function (app, router) {
+    // app.use('/api', require('./home.js')(router));
+    app.use('/startups', require('./startups.js')(router));
+    // app.use(bodyParser);
+    // app.use('/startups/:id', require('./startups')
+    // app.use('/api/tasks', require('./task_route.js')(router));
+};
