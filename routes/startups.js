@@ -12,11 +12,15 @@ module.exports = function (router) {
         var query;
         if (req.query.name) { query = "SELECT * FROM startup WHERE Name LIKE '%" + JSON.parse(req.query.name) + "%';"; }
         else { query = "SELECT * FROM startup"; }
+        sql.connect( function(err) {
+                if(err) { console.log(err); }
+        });
         sql.query({sql: query}, function(err, rows, fields) {
             if (err) { throw err; }
             // console.log(JSON.parse(req.query.name));
             res.send(rows);
         })
+        sql.end();
     });
 
     startupsRoute.post(function (req, res) {

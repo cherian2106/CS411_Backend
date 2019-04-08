@@ -6,7 +6,7 @@ var connection = mysql.createConnection({
     password: '15905885',
     database: 'heroku_557cfceed03f11d'
 });
-connection.connect( function(err) {
-    if(err) { console.log(err); }
-});
+// connection.connect( function(err) {
+//     if(err) { console.log(err); }
+// });
 module.exports = connection;
