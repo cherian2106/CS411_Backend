@@ -9,8 +9,8 @@ module.exports = function (router) {
     startupsRoute.get(function (req, res) {
         // var connectionString = secrets.token;
         var query;
-        if (req.query.name) { query = "SELECT * FROM Startup WHERE Name LIKE '%" + JSON.parse(req.query.name) + "%';"; }
-        else { query = "SELECT * FROM Startup"; }
+        if (req.query.name) { query = "SELECT * FROM startup WHERE Name LIKE '%" + JSON.parse(req.query.name) + "%';"; }
+        else { query = "SELECT * FROM startup"; }
         sql.query({sql: query}, function(err, rows, fields) {
             if (err) { throw err; }
             // console.log(JSON.parse(req.query.name));
@@ -27,7 +27,7 @@ module.exports = function (router) {
 
     startupRoute.get(function (req, res) {
         // console.log(req.params.id)
-        sql.query({sql: "SELECT * FROM Startup WHERE StartupID = ?", values: [JSON.parse(req.params.id)]}, function(err, rows) {
+        sql.query({sql: "SELECT * FROM startup WHERE StartupID = ?", values: [JSON.parse(req.params.id)]}, function(err, rows) {
             if (err) { throw err; }
             res.send(rows);
         })
@@ -44,7 +44,7 @@ module.exports = function (router) {
     });
 
     startupRoute.delete(function (req, res) {
-        sql.query({sql: "DELETE FROM Startup WHERE StartupID = ?", values: [JSON.parse(req.params.id)]}, function(err, rows) {
+        sql.query({sql: "DELETE FROM startup WHERE StartupID = ?", values: [JSON.parse(req.params.id)]}, function(err, rows) {
             if (err) { throw err; }
             res.send(rows);
         })
