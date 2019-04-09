@@ -7,9 +7,7 @@ var config = {
 }
 var connection;
 connection = mysql.createConnection(config);
-connection.query('SET GLOBAL connect_timeout=1000000')
-connection.query('SET GLOBAL wait_timeout=1000000')
-connection.query('SET GLOBAL interactive_timeout=1000000')
+
 
 // connection.connect( function(err) {
 //     if(err) { console.log(err); }
