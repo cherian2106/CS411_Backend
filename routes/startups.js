@@ -17,7 +17,8 @@ module.exports = function (router) {
     startupsRoute.get(function (req, res) {
         // console.log(JSON.parse(req.query.name));
         var query;
-        if (req.query.name) { query = "SELECT * FROM startup WHERE Name LIKE '%" + JSON.parse(req.query.name) + "%';"; }
+        if (req.query.uid) { query = " SELECT * FROM startup WHERE UserID = '" + JSON.parse(req.query.uid) + "';"}
+        else if (req.query.name) { query = "SELECT * FROM startup WHERE Name LIKE '%" + JSON.parse(req.query.name) + "%';"; }
         else { query = "SELECT * FROM startup"; }       
         connection = mysql.createConnection(config);
 
