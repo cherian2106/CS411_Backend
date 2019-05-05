@@ -18,9 +18,9 @@ module.exports = function (router) {
     commentRoute.get(function (req, res) {
         // console.log(JSON.parse(req.query.name));
         console.log(req.params.id);
-  
         connection = mysql.createConnection(config);
-        connection.query({sql: "SELECT * FROM comment WHERE StartupID = ?", values: [JSON.parse(req.params.id)]}, function(err, rows) {
+        connection.query({sql: "SELECT c.CommentID, c.StartupID, c.Comment, c.Date, u.Name FROM comment c, user u "+
+        "WHERE c.UserID = u.UserID AND c.StartupID = ?", values: [JSON.parse(req.params.id)]}, function(err, rows) {
             if (err) { throw err; }
             res.send(rows);
         })
@@ -28,7 +28,7 @@ module.exports = function (router) {
     });
 
     commentsRoute.post(function (req, res) {
-        console.log("mwwwww");
+        // console.log("mwwwww");
         connection = mysql.createConnection(config);
         connection.query({sql: "INSERT INTO comment SET ?", values: [req.body]}, function(err, rows) {
             if (err) { console.log(err); }
