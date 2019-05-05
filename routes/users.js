@@ -27,5 +27,20 @@ module.exports = function (router) {
         connection.end();
     });
 
+    usersRoute.post(function (req, res) {
+        // sql.connect( function(err) {
+        //     if(err) { console.log(err); }
+        // });
+        // handle(sql);
+        connection = mysql.createConnection(config);
+        connection.query({sql: "INSERT INTO user SET ?", values: [req.body]}, function(err, rows) {
+            if (err) { throw err; }
+            res.send(rows)
+        })
+
+        connection.end();
+        // sql.end();
+    });
+
     return router;
 }
