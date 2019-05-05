@@ -11,11 +11,11 @@ var connection;
 // var bodyParser = require('body-parser')
 module.exports = function (router) {
 
-    var startupsRoute = router.route('/');
-    var startupRoute = router.route('/:id');
+    var startupsRoute = router.route('/startups');
+    var startupRoute = router.route('/startups/:id');
 
     startupsRoute.get(function (req, res) {
-
+        // console.log(JSON.parse(req.query.name));
         var query;
         if (req.query.name) { query = "SELECT * FROM startup WHERE Name LIKE '%" + JSON.parse(req.query.name) + "%';"; }
         else { query = "SELECT * FROM startup"; }       
