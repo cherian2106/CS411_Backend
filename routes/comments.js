@@ -19,13 +19,22 @@ module.exports = function (router) {
         // console.log(JSON.parse(req.query.name));
         console.log(req.params.id);
         connection = mysql.createConnection(config);
-        connection.query({sql: "SELECT c.CommentID, c.StartupID, c.Comment, c.Date, u.Name FROM comment c, user u "+
+        connection.query({sql: "SELECT c.CommentID, c.StartupID, c.Comment, c.Date, u.UserID, u.Name FROM comment c, user u "+
         "WHERE c.UserID = u.UserID AND c.StartupID = ?", values: [JSON.parse(req.params.id)]}, function(err, rows) {
             if (err) { throw err; }
             res.send(rows);
         })
         connection.end();
     });
+
+    commentRoute.delete(function (req, res) {
+        connection = mysql.createConnection(config);
+        connection.query({sql: "DELETE FROM comment WHERE CommentID = ?", values: [JSON.parse(req.params.id)]}, function(err, rows) {
+            if (err) { throw err; }
+            res.send(rows);
+        })
+        connection.end();
+    })
 
     commentsRoute.post(function (req, res) {
         // console.log("mwwwww");
@@ -37,6 +46,7 @@ module.exports = function (router) {
         console.log("reached")
         connection.end();
     });
+
 
     return router;
 }

@@ -66,18 +66,6 @@ module.exports = function (router) {
             res.send(rows);
         })
         connection.end();
-        //"UPDATE Startup SET ? WHERE StartupID = ?" values: [req.body, JSON.parse(req.params.id)]
     });
-
-    startupRoute.delete(function (req, res) {
-        // handle(sql);
-        connection = mysql.createConnection(config);
-        connection.query({sql: "DELETE FROM startup WHERE StartupID = ?", values: [JSON.parse(req.params.id)]}, function(err, rows) {
-            if (err) { throw err; }
-            res.send(rows);
-        })
-        connection.end();
-    })
-
     return router;
 }

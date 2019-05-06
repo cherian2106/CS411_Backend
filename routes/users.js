@@ -12,19 +12,38 @@ var connection;
 module.exports = function (router) {
 
     var usersRoute = router.route('/users');
-    // var startupRoute = router.route('/:id');
+    var userRoute = router.route('/users/:id');
 
-    usersRoute.get(function (req, res) {
+    userRoute.get(function (req, res) {
         // console.log(JSON.parse(req.query.name));
         var query;
-        query = "SHOW TABLES;"
+        // query = "START TRANSACTION;"+
+        // "SELECT @A:=COUNT(StartupID) FROM startup WHERE UserID = ?;"+
+        // "UPDATE user SET Num_startups=@A WHERE UserID = ?;"+
+        // "COMMIT;"
         connection = mysql.createConnection(config);
+        connection.beginTransaction(function(err) {
+            if(err) { throw err; }
+            connection.query({sql: "SELECT StartupID FROM startup WHERE UserID = ?", values: [req.params.id]}, function(err, result) {
+                console.log(req.params.id);
+                // console.log(result);
+                if (err) {
+                    connection.rollback(function() {
+                        console.log(err);
+                    })
+                };
+                // console.log(result);
+                var log = result
+                console.log(log);
+            });
+            connection.end();
 
-        connection.query({sql: query}, function(err, rows, fields) {
-            if (err) { throw err; }
-            res.send(rows);
         })
-        connection.end();
+
+        // connection.query({sql: query, values: req.params.id}, function(err, rows, fields) {
+        //     if (err) { throw err; }
+        //     res.send(rows);
+        // })
     });
 
     usersRoute.post(function (req, res) {
