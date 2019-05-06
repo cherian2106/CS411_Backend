@@ -22,23 +22,27 @@ module.exports = function (router) {
         // "UPDATE user SET Num_startups=@A WHERE UserID = ?;"+
         // "COMMIT;"
         connection = mysql.createConnection(config);
-        connection.beginTransaction(function(err) {
-            if(err) { throw err; }
-            connection.query({sql: "SELECT StartupID FROM startup WHERE UserID = ?", values: [req.params.id]}, function(err, result) {
-                console.log(req.params.id);
-                // console.log(result);
-                if (err) {
-                    connection.rollback(function() {
-                        console.log(err);
-                    })
-                };
-                // console.log(result);
-                var log = result
-                console.log(log);
-            });
-            connection.end();
-
+        //   connection.beginTransaction(function(err) {
+        //     if(err) { throw err; }
+        //     connection.query({sql: "SELECT StartupID FROM startup WHERE UserID = ?", values: [req.params.id]}, function(err, result) {
+        //         console.log(req.params.id);
+        //         // console.log(err);
+        //         if (err) {
+        //             connection.rollback(function() {
+        //                 console.log(err);
+        //             })
+        //         };
+        //         // console.log(result);
+        //         var log = result
+        //         console.log(log);
+        //     });
+        // })
+        var query = "SELECT * FROM user";
+        connection.query({sql: query, values: [req.body]}, function(err, rows) {
+            if (err) { throw err; }
+            res.send(rows)
         })
+        connection.end();
 
         // connection.query({sql: query, values: req.params.id}, function(err, rows, fields) {
         //     if (err) { throw err; }
