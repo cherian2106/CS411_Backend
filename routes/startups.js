@@ -48,8 +48,7 @@ module.exports = function (router) {
     startupRoute.get(function (req, res) {
         console.log(req.params.id);
         connection = mysql.createConnection(config);
-        connection.query({sql: "SELECT s.StartupID, s.Name, s.Category, s.Money_raised, s.Location," +
-        "s.Launch_date, u.Name as User_name FROM startup s, user u WHERE u.UserID = s.UserID AND s.StartupID = ?"
+        connection.query({sql: "SELECT * FROM startup_detailed WHERE StartupID = ?"
         , values: [JSON.parse(req.params.id)]}, function(err, rows) {
             if (err) { throw err; }
             res.send(rows);
